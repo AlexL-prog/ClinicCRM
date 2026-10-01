@@ -7,8 +7,16 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
+# UI
+ui/node_modules/
+ui/dist/
+
+# Backend (Python)
+backend/.venv/
+backend/__pycache__/
+*.pyc
+.env
+
 dist-ssr
 *.local
 
