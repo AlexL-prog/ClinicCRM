@@ -4,7 +4,6 @@ export default function PatientsTable({patients}: { patients: any[] }) {
           <table className="patients-table">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Name</th>
   	            <th>Birth Date</th>
   	            <th>Gender</th>
@@ -16,7 +15,6 @@ export default function PatientsTable({patients}: { patients: any[] }) {
             <tbody>
               {patients.map((patient) => (
 			        <tr key={patient.id}>
-			          <td>{patient.id}</td>
 			          <td>{patient.name}</td>
 			          <td>{patient.birthDate}</td>
 			          <td>{patient.gender}</td>

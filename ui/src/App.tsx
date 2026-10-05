@@ -4,10 +4,13 @@ import SearchBar from './components/SearchBar'
 import './App.css'
 import { useQuery } from '@tanstack/react-query'
 import { Spinner } from './assets/Spinner'
+import { AddPatientForm } from './components/AddPatientForm'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 
 function App() {
+  const navigate = useNavigate()
 
-  const { data: patients, isPending, refetch, error } = useQuery({
+  const { data: patients, isPending, error } = useQuery({
     queryKey: ['patients'],
     queryFn: getPatients
   })
@@ -17,10 +20,19 @@ function App() {
   }
 
   return (
-    <>    
-      <SearchBar />
-      {isPending ? <Spinner center/> : <PatientsTable patients={patients} />}
-      <AddButton refetch={refetch} />
+    <>
+      <Routes> 
+        <Route path='/' element={
+          <div>
+            <SearchBar />
+            {isPending ? <Spinner center/> : <PatientsTable patients={patients} />}
+            <AddButton navigate={navigate} />
+          </div>   
+        } />
+        <Route path='/form' element={
+          <AddPatientForm />
+        } />
+      </Routes>
     </>
   )
 }
