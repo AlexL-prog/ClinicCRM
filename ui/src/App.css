@@ -4,9 +4,24 @@
 }
 
 tr {
-  text-align: center;
+  text-align: start;
+}
+
+th {
+  border-radius: 12px;
+  text-align: start;
+  padding: 8px;
+  background-color: rgb(102, 102, 223);
+  color: white;
+  font-weight: 400;
+}
+
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
 }
 
 .patients-table {
   width: 100%;
+  text-align: start;
 }

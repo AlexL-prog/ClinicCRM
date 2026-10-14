@@ -1,22 +1,42 @@
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field,  field_validator
 from typing import List
-from datetime import datetime
+from datetime import datetime, date
 from uuid import uuid4, UUID
 
 class Patient(BaseModel):
     id: UUID = Field(default_factory=uuid4)
-    name: str
-    birthDate: str
+    name: str = Field(..., min_length=1, max_length=20)
+    birthDate: date
     gender: str
     createdAt: datetime = Field(default_factory=datetime.now)
     updatedAt: datetime = Field(default_factory=datetime.now)
 
+    @field_validator('birthDate')
+    @classmethod
+    def validate_birth_date(cls, value: date) -> date:
+        today = date.today()
+
+        if value > today:
+            raise ValueError("Birth date cannot be in the future")
+        age = today.year - value.year - ((today.month, today.day) < (value.month, value.day))
+        if age > 120:
+            print(f"Age: {age}, Birth Date: {value}, Today: {today}")
+            raise ValueError("Age cannot be greater than 120 years")
+        return value
+
+    @field_validator('name', 'gender')
+    @classmethod
+    def validate_not_empty(cls, v: str, info: ValidationInfo) -> str:
+        if not v or not v.strip():
+            raise ValueError(f"{info.field_name.capitalize()} cannot be empty")
+        return v
+
 class PatientUpdate(BaseModel):
-    name: str
-    birthDate: str
-    gender: str
+    name: str = Field(..., min_length=1, max_length=20)
+    birthDate: date
+    gender: str = Field(..., min_length=1, max_length=20)
     updatedAt: datetime = Field(default_factory=datetime.now)
 
 app = FastAPI()
@@ -29,9 +49,9 @@ app.add_middleware(
 )
 
 patients = [
-    Patient(id=uuid4(), name="John Doe", birthDate="30.09.2001", gender="Male", createdAt=datetime.now().isoformat(), updatedAt=datetime.now().isoformat()),
-    Patient(id=uuid4(), name="Jane Smith", birthDate="15.05.1995", gender="Female", createdAt=datetime.now().isoformat(), updatedAt=datetime.now().isoformat()),
-    Patient(id=uuid4(), name="Alice Johnson", birthDate="22.11.1988", gender="Female", createdAt=datetime.now().isoformat(), updatedAt=datetime.now().isoformat())]
+    Patient(id=uuid4(), name="John Doe", birthDate=date(2001, 9, 30), gender="Male", createdAt=datetime.now().isoformat(), updatedAt=datetime.now().isoformat()),
+    Patient(id=uuid4(), name="Jane Smith", birthDate=date(1995, 5, 15), gender="Female", createdAt=datetime.now().isoformat(), updatedAt=datetime.now().isoformat()),
+    Patient(id=uuid4(), name="Alice Johnson", birthDate=date(1988, 11, 22), gender="Female", createdAt=datetime.now().isoformat(), updatedAt=datetime.now().isoformat())]
 
 
 @app.get("/patients", response_model=List[Patient])

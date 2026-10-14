@@ -1,10 +1,10 @@
-.add-button-div {
+.general-button-div {
     margin: 30px auto 30px auto;
     width: 150px;
     height: 50px;
 }
 
-.add-button {
+.general-button {
     background-color: rgb(102, 102, 223);
     color: white;
     border: 1px solid rgb(102, 102, 223);
@@ -16,14 +16,14 @@
     font-size: 16px;
 }
 
-.add-button:hover {
+.general-button:hover {
     background-color: white;
     color: rgb(102, 102, 223);
     border: 1px solid rgb(102, 102, 223);
     cursor: pointer;
 }
 
-.add-button:active {
+.general-button:active {
     background-color: rgb(102, 102, 223);
     color: white;
     border: 1px solid rgb(102, 102, 223);

@@ -1,0 +1,47 @@
+.add-patient-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.form-input {
+  margin-bottom: 10px;
+  width: 400px;
+  border: 1px solid rgb(102, 102, 223);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  height: 50px;
+  text-align: start;
+  font-size: 16px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+form-input:invalid {
+  border: 2px solid red;
+  color: #6b6375;
+}
+
+.form-radio {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.form-radio-group {
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-message {
+  color: rgb(156, 30, 30);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.error-class {
+  border: 2px solid rgb(156, 30, 30);
+}
